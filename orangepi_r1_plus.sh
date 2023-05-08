@@ -21,6 +21,13 @@ sed -i '/CONFIG_KERNEL_BUILD_DOMAIN/d' .config &&
 # 网络共享允许使用 root 用户
 sed -i 's/invalid users = root/#invalid users = root/g' feeds/packages/net/samba4/files/smb.conf.template
 
+# 修复因 Docker 导致的 UDP 代理失效，但此步骤会导致 Docker 内部无法代理 UDP 请求，因此需要手动下发默认 DNS 服务器。
+cat >> package/base-files/files/etc/sysctl.conf <<EOF
+net.bridge.bridge-nf-call-ip6tables = 0
+net.bridge.bridge-nf-call-iptables = 0
+net.bridge.bridge-nf-call-arptables = 0
+EOF
+
 # 添加 PassWall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/custom/passwall
 svn export https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall package/custom/luci-app-passwall

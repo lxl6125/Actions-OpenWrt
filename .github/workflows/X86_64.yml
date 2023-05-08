@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build lede OrangePi_R1_Plus
+name: X86_64
 
 on:
   repository_dispatch:
@@ -20,14 +20,16 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: .config-lede-orangepi_r1_plus
-  DIY_P1_SH: diy-lede-part1.sh
-  DIY_P2_SH: diy-lede-orangepi_r1_plus.sh
+  CONFIG_FILE: x86_64.config
+  DIY_P1_SH: diy-part.sh
+  DIY_P2_SH: x86_64.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
+  DEVICE_ARCH: x86_64
+  PRODUCT_NAME: X86_64
 
 jobs:
   build:
@@ -54,7 +56,7 @@ jobs:
         echo -e  "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l) \n"
         echo "硬盘详情："
         df -Th
-        
+
     - name: 初始化编译环境
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -83,6 +85,13 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
+    - name: Cache
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        mixkey: ${{ env.DEVICE_ARCH }}
+        prefix: ${{ github.workspace }}/openwrt
+
     - name: 加载自定义feeds
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
@@ -95,7 +104,7 @@ jobs:
 
     - name: 安装feeds
       run: cd openwrt && ./scripts/feeds install -a
-    
+
     - name: 加载自定义配置
       run: |
         [ -e files ] && mv files openwrt/files
@@ -163,7 +172,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "release_tag=${{ env.TAG_DATE }}" >> $GITHUB_OUTPUT
+        echo "release_tag=${{ env.PRODUCT_NAME }}-${{ env.TAG_DATE }}" >> $GITHUB_OUTPUT
         touch release.txt
         echo "status=success" >> $GITHUB_OUTPUT
 
@@ -181,13 +190,13 @@ jobs:
       uses: Mattraks/delete-workflow-runs@main
       with:
         retain_days: 1
-        keep_minimum_runs: 3
+        keep_minimum_runs: 4
 
     - name: 清理Releases
       uses: dev-drprasad/delete-older-releases@v0.2.1
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        keep_latest: 3
+        keep_latest: 4
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
