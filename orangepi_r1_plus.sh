@@ -38,9 +38,6 @@ svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash packa
 # 下载 clash 内核
 $GITHUB_WORKSPACE/preset-clash-core.sh arm64
 
-# 添加 解除网易云音乐播放限制
-git clone --depth=1 -b master --single-branch https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic package/custom/luci-app-unblockneteasemusic
-
 # 添加 qBittorrent 增强版
 git clone --depth=1 https://github.com/lxl6125/openwrt-qbittorrent-enhanced package/custom/qbittorrent-enhanced
 
