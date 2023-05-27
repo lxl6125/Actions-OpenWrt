@@ -44,3 +44,8 @@ git clone --depth=1 https://github.com/lxl6125/openwrt-qbittorrent-enhanced pack
 # 添加 alist
 git clone --depth=1 https://github.com/sbwml/luci-app-alist package/custom/alist
 
+# 替换 argon 主题
+rm -rf feeds/luci/themes/luci-theme-argon feeds/luci/applications/luci-app-argon-config
+git clone --depth=1 -b 18.06 --single-branch https://github.com/jerrykuku/luci-theme-argon feeds/luci/themes/luci-theme-argon
+git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config feeds/luci/applications/luci-app-argon-config
+
