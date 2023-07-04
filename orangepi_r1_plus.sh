@@ -28,24 +28,9 @@ net.bridge.bridge-nf-call-iptables = 0
 net.bridge.bridge-nf-call-arptables = 0
 EOF
 
-# 添加 PassWall
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/custom/passwall
-svn export https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall package/custom/luci-app-passwall
-
-# 添加 OpenClash
-svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/custom/luci-app-openclash
-
 # 下载 clash 内核
 $GITHUB_WORKSPACE/preset-clash-core.sh arm64
 
-# 添加 qBittorrent 增强版
-git clone --depth=1 https://github.com/lxl6125/openwrt-qbittorrent-enhanced package/custom/qbittorrent-enhanced
-
-# 添加 alist
-git clone --depth=1 https://github.com/sbwml/luci-app-alist package/custom/alist
-
-# 替换 argon 主题
-rm -rf feeds/luci/themes/luci-theme-argon feeds/luci/applications/luci-app-argon-config
-git clone --depth=1 -b 18.06 --single-branch https://github.com/jerrykuku/luci-theme-argon feeds/luci/themes/luci-theme-argon
-git clone --depth=1 -b 18.06 --single-branch https://github.com/jerrykuku/luci-app-argon-config feeds/luci/applications/luci-app-argon-config
+# 添加 luci-app-alist
+svn export https://github.com/sbwml/luci-app-alist/trunk/luci-app-alist package/custom/luci-app-alist
 
