@@ -27,10 +27,10 @@ EOF
 
 # 添加 PassWall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/custom/passwall
-svn export https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/custom/luci-app-passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/custom/luci-app-passwall
 
 # 添加 OpenClash
-svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/custom/luci-app-openclash
+git clone --depth=1 https://github.com/vernesong/OpenClash.git package/custom/luci-app-openclash
 
 # 下载 clash 内核
 $GITHUB_WORKSPACE/preset-clash-core.sh amd64
