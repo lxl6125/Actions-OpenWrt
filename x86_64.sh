@@ -1,13 +1,13 @@
 #!/bin/bash
 #
-# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
-#
-# This is free software, licensed under the MIT License.
-# See /LICENSE for more information.
-#
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
+#
+# Copyright (c) 2019-2024 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
 #
 
 # Add kernel build user
@@ -52,5 +52,3 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go package/custom/
 rm -rf feeds/luci/themes/luci-theme-argon feeds/luci/applications/luci-app-argon-config
 git clone --depth=1 -b 18.06 --single-branch https://github.com/jerrykuku/luci-theme-argon feeds/luci/themes/luci-theme-argon
 git clone --depth=1 -b 18.06 --single-branch https://github.com/jerrykuku/luci-app-argon-config feeds/luci/applications/luci-app-argon-config
-
-sed -i 's/TARGET_CFLAGS += -DHAVE_MAP_SYNC/TARGET_CFLAGS += -DHAVE_MAP_SYNC -D_LARGEFILE64_SOURCE/' feeds/packages/utils/xfsprogs/Makefile
