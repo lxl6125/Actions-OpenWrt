@@ -16,3 +16,6 @@ sed -i 's/192.168.1.1/192.168.1.2/g' package/base-files/files/bin/config_generat
 # 将构建日期添加到概览页面
 export orig_version="$(cat "package/lean/default-settings/files/zzz-default-settings" | grep DISTRIB_REVISION= | awk -F "'" '{print $2}')"
 sed -i "s/${orig_version}/${orig_version} ($(date +"%Y-%m-%d"))/g" package/lean/default-settings/files/zzz-default-settings
+
+# 使用旧版 luci
+sed -i 's/luci.git;openwrt-23.05/luci/g' feeds.conf.default

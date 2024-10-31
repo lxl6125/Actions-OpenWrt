@@ -103,9 +103,6 @@ jobs:
     - name: 更新 feeds
       run: cd lede && ./scripts/feeds update -a
 
-    - name: 安装 feeds
-      run: cd lede && ./scripts/feeds install -a
-
     - name: 加载自定义配置
       run: |
         [ -e files ] && mv files lede/files
@@ -113,6 +110,9 @@ jobs:
         chmod +x $DIY_P2_SH
         cd lede
         $GITHUB_WORKSPACE/$DIY_P2_SH
+
+    - name: 安装 feeds
+      run: cd lede && ./scripts/feeds install -a
 
     - name: 下载软件包
       id: package
