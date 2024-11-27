@@ -25,13 +25,16 @@ net.bridge.bridge-nf-call-iptables = 0
 net.bridge.bridge-nf-call-arptables = 0
 EOF
 
-# 添加 PassWall
+# 替换 PassWall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/custom/passwall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/custom/luci-app-passwall
+rm -rf feeds/luci/applications/luci-app-passwall
 rm -rf feeds/packages/net/v2ray-geodata
+rm -rf feeds/packages/net/xray-core
 
-# 添加 OpenClash
-git clone --depth=1 https://github.com/vernesong/OpenClash.git package/custom/luci-app-openclash
+# 替换 OpenClash
+git clone --depth=1 https://github.com/vernesong/OpenClash package/custom/luci-app-openclash
+rm -rf feeds/luci/applications/luci-app-openclash
 
 # 下载 clash 内核
 $GITHUB_WORKSPACE/preset-clash-core.sh amd64
@@ -40,15 +43,23 @@ $GITHUB_WORKSPACE/preset-clash-core.sh amd64
 git clone --depth=1 https://github.com/lxl6125/openwrt-qbittorrent-enhanced package/custom/qbittorrent-enhanced
 rm -rf feeds/packages/libs/libtorrent-rasterbar
 
-# 添加 alist
-git clone --depth=1 -b lua --single-branch https://github.com/sbwml/luci-app-alist package/custom/alist
+# 替换 alist
+git clone --depth=1 https://github.com/sbwml/luci-app-alist package/custom/alist
+rm -rf feeds/luci/applications/luci-app-alist
 rm -rf feeds/packages/net/alist
 
-# 添加 ddns-go
-git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go package/custom/ddns-go
-rm -rf feeds/packages/net/ddns-go
+# 替换 v2raya
+git clone --depth=1 https://github.com/v2rayA/v2raya-openwrt package/custom/tmp
+mkdir package/custom/v2raya
+mv package/custom/tmp/luci-app-v2raya package/custom/v2raya
+mv package/custom/tmp/v2raya package/custom/v2raya
+rm -rf package/custom/tmp
+rm -rf feeds/luci/applications/luci-app-v2raya
+rm -rf feeds/packages/net/v2raya
+mkdir -p files/usr/share/xray
+wget -P files/usr/share/xray https://github.com/v2fly/geoip/releases/latest/download/geoip.dat
+wget -O files/usr/share/xray/geosite.dat https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat
+chmod 644 files/usr/share/xray/*
 
-# 替换 argon 主题
-rm -rf feeds/luci/themes/luci-theme-argon feeds/luci/applications/luci-app-argon-config
-git clone --depth=1 -b 18.06 --single-branch https://github.com/jerrykuku/luci-theme-argon feeds/luci/themes/luci-theme-argon
-git clone --depth=1 -b 18.06 --single-branch https://github.com/jerrykuku/luci-app-argon-config feeds/luci/applications/luci-app-argon-config
+# 添加 luci-app-argon-config
+git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/custom/luci-app-argon-config
