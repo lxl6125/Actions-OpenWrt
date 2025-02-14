@@ -20,7 +20,7 @@ on:
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
-  REPO_BRANCH: openwrt-24.10
+  REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: immortalwrt-x86_64.config
   DIY_P1_SH: immortalwrt-diy-part.sh
