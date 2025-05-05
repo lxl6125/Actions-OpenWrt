@@ -18,19 +18,28 @@ sed -i '/CONFIG_KERNEL_BUILD_USER/d' .config &&
 sed -i '/CONFIG_KERNEL_BUILD_DOMAIN/d' .config &&
     echo 'CONFIG_KERNEL_BUILD_DOMAIN="GitHub Actions"' >>.config
 
+# 替换 PassWall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/custom/passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/custom/luci-app-passwall
+rm -rf feeds/luci/applications/luci-app-passwall
+rm -rf feeds/packages/net/chinadns-ng
+rm -rf feeds/packages/net/sing-box
+rm -rf feeds/packages/net/v2ray-geodata
+rm -rf feeds/packages/net/xray-core
+
+# 替换 OpenClash
+git clone --depth=1 https://github.com/vernesong/OpenClash package/custom/luci-app-openclash
+rm -rf feeds/luci/applications/luci-app-openclash
+
+# 为 OpenClash 下载 clash 内核
+$GITHUB_WORKSPACE/preset-clash-core.sh amd64
+
+# 替换 AList
+git clone --depth=1 https://github.com/sbwml/luci-app-alist package/custom/alist
+rm -rf feeds/luci/applications/luci-app-alist
+rm -rf feeds/packages/net/alist
+
 # 替换 qBittorrent 增强版，可选从源码编译（Dynamic build）或直接下载二进制文件（Static build）
 git clone --depth=1 https://github.com/lxl6125/openwrt-qbittorrent-enhanced package/custom/qbittorrent-enhanced
 rm -rf feeds/luci/applications/luci-app-qbittorrent
 rm -rf feeds/packages/net/qBittorrent-Enhanced-Edition
-
-# 添加 samba3
-git clone --depth=1 https://github.com/lxl6125/luci-app-samba package/custom/samba
-
-# 为 openclash 下载 clash 内核
-$GITHUB_WORKSPACE/preset-clash-core.sh amd64
-
-# 为 v2rayA 下载 geoip.dat 、geosite.dat
-mkdir -p files/usr/share/xray
-wget -P files/usr/share/xray https://github.com/v2fly/geoip/releases/latest/download/geoip.dat
-wget -O files/usr/share/xray/geosite.dat https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat
-chmod 644 files/usr/share/xray/*
