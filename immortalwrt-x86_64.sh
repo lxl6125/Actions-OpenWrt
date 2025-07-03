@@ -34,10 +34,10 @@ rm -rf feeds/luci/applications/luci-app-openclash
 # 为 OpenClash 下载 clash 内核
 $GITHUB_WORKSPACE/preset-clash-core.sh amd64
 
-# 替换 AList
-git clone --depth=1 https://github.com/sbwml/luci-app-alist package/custom/alist
-rm -rf feeds/luci/applications/luci-app-alist
-rm -rf feeds/packages/net/alist
+# 替换 OpenList
+git clone --depth=1 https://github.com/OpenListTeam/OpenList-OpenWRT package/custom/openlist
+rm -rf feeds/luci/applications/luci-app-openlist
+rm -rf feeds/packages/net/openlist
 
 # 替换 qBittorrent 增强版，可选从源码编译（Dynamic build）或直接下载二进制文件（Static build）
 git clone --depth=1 https://github.com/lxl6125/openwrt-qbittorrent-enhanced package/custom/qbittorrent-enhanced
