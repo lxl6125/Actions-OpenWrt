@@ -27,12 +27,15 @@ rm -rf feeds/packages/net/sing-box
 rm -rf feeds/packages/net/v2ray-geodata
 rm -rf feeds/packages/net/xray-core
 
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
+
 # 替换 OpenClash
 git clone --depth=1 https://github.com/vernesong/OpenClash package/custom/luci-app-openclash
 rm -rf feeds/luci/applications/luci-app-openclash
 
 # 为 OpenClash 下载 clash 内核
-$GITHUB_WORKSPACE/preset-clash-core.sh amd64
+$GITHUB_WORKSPACE/preset-clash-core.sh amd64-v1
 
 # 替换 OpenList
 git clone --depth=1 https://github.com/OpenListTeam/OpenList-OpenWRT package/custom/openlist
@@ -43,3 +46,4 @@ rm -rf feeds/packages/net/openlist
 git clone --depth=1 https://github.com/lxl6125/openwrt-qbittorrent-enhanced package/custom/qbittorrent-enhanced
 rm -rf feeds/luci/applications/luci-app-qbittorrent
 rm -rf feeds/packages/net/qBittorrent-Enhanced-Edition
+
