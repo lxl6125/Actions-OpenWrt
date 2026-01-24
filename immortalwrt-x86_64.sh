@@ -19,10 +19,13 @@ sed -i '/CONFIG_KERNEL_BUILD_DOMAIN/d' .config &&
     echo 'CONFIG_KERNEL_BUILD_DOMAIN="GitHub Actions"' >>.config
 
 # 替换 PassWall
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/custom/passwall
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/custom/luci-app-passwall
+git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/custom/passwall
+git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall package/custom/luci-app-passwall
 rm -rf feeds/luci/applications/luci-app-passwall
 rm -rf feeds/packages/net/{chinadns-ng,dns2socks,geoview,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-rust,shadow-tls,simple-obfs,sing-box,tcping,trojan-plus,tuic-client,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
+
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
 
 # 替换 OpenClash
 git clone --depth=1 https://github.com/vernesong/OpenClash package/custom/luci-app-openclash
