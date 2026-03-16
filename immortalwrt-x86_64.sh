@@ -24,8 +24,9 @@ git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall package
 rm -rf feeds/luci/applications/luci-app-passwall
 rm -rf feeds/packages/net/{chinadns-ng,dns2socks,geoview,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-rust,shadow-tls,simple-obfs,sing-box,tcping,trojan-plus,tuic-client,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
 
-rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
+sed -i '/PKG_MIRROR_HASH/d' package/custom/passwall/tcping/Makefile
+sed -i '/PKG_MIRROR_HASH/d' package/custom/passwall/trojan-plus/Makefile
+sed -i '/PKG_MIRROR_HASH/d' package/custom/passwall/shadowsocksr-libev/Makefile
 
 # 替换 OpenClash
 git clone --depth=1 https://github.com/vernesong/OpenClash package/custom/luci-app-openclash
@@ -39,7 +40,7 @@ git clone --depth=1 https://github.com/OpenListTeam/OpenList-OpenWRT package/cus
 rm -rf feeds/luci/applications/luci-app-openlist
 rm -rf feeds/packages/net/openlist
 
-# 替换 qBittorrent 增强版，可选从源码编译（Dynamic build）或直接下载二进制文件（Static build）
+# 替换 qBittorrent 增强版，使用预编译的二进制文件，节省编译时间
 git clone --depth=1 https://github.com/lxl6125/openwrt-qbittorrent-enhanced package/custom/qbittorrent-enhanced
 rm -rf feeds/luci/applications/luci-app-qbittorrent
 rm -rf feeds/packages/net/qBittorrent-Enhanced-Edition
