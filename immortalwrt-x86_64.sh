@@ -22,10 +22,8 @@ sed -i '/CONFIG_KERNEL_BUILD_DOMAIN/d' .config &&
 git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/custom/passwall
 git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall package/custom/luci-app-passwall
 rm -rf feeds/luci/applications/luci-app-passwall
-rm -rf feeds/packages/net/{chinadns-ng,dns2socks,geoview,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-rust,shadow-tls,simple-obfs,sing-box,tcping,trojan-plus,tuic-client,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
+rm -rf feeds/packages/net/{chinadns-ng,dns2socks,geoview,hysteria,ipt2socks,microsocks,naiveproxy,shadow-tls,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,tcping,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
 
-sed -i '/PKG_MIRROR_HASH/d' package/custom/passwall/tcping/Makefile
-sed -i '/PKG_MIRROR_HASH/d' package/custom/passwall/trojan-plus/Makefile
 sed -i '/PKG_MIRROR_HASH/d' package/custom/passwall/shadowsocksr-libev/Makefile
 
 # 替换 OpenClash
