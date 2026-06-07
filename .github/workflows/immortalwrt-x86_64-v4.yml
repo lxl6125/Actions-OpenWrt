@@ -15,8 +15,8 @@ name: immortalwrt-x86_64-v4
 on:
   repository_dispatch:
   workflow_dispatch:
- # schedule:
- #   - cron: 0 4 ? * 1
+  schedule:
+    - cron: 0 4 1 * *
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
@@ -30,7 +30,6 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  DEVICE_ARCH: x86_64
   PRODUCT_NAME: X86_64
 
 jobs:
@@ -85,13 +84,6 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH immortalwrt
         ln -sf /mnt/workdir/immortalwrt $GITHUB_WORKSPACE/immortalwrt
-
-    - name: Cache
-      uses: klever1988/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        mixkey: ${{ env.DEVICE_ARCH }}
-        prefix: ${{ github.workspace }}/immortalwrt
 
     - name: 加载自定义 feeds
       run: |
